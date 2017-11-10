@@ -92,6 +92,7 @@ one private subnet in each Availability Zones of the specified region.
    az_count is specified in the input json. Then count can be set as:
 
         "${var.az_count * length(split(",",var.priv_subnet_names))}"
+   here priv_subnet_names is the variable specified in input file to name the subnets.
         
 1. In the Route table resource named priv_rtb, open the count attribute and set appropriate value.
 
@@ -103,13 +104,9 @@ one private subnet in each Availability Zones of the specified region.
 1. If the
     For AZs "a and b", use:
 
-        "${element(data.aws_availability_zones.available.names, 0)}"
-        "${element(data.aws_availability_zones.available.names, 1)}"
-
-    For AZs "c and d",use:
-
-        "${element(data.aws_availability_zones.available.names, 2)}"
-        "${element(data.aws_availability_zones.available.names, 4)}"
+        "${cidrsubnet(cidrsubnet(var.vpc_cidr_block, var.az_cidr_newbits, var.az_cidr_length * (count.index % var.az_count)), 
+        var.subnet_cidr_newbits, var.subnet_cidr_length * (count.index / var.az_count + length(split(",",var.priv_subnet_names))
+        * signum(length(var.priv_subnet_names))))}"
 
 1. If any other availability zones other than "a and b" are being used,
    rename the subnets in the parameters and template_body attributes in the
