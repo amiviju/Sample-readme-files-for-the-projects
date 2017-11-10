@@ -1,2 +1,116 @@
-# Exam
-this is the first change in this file.
+# 1. **VDMS VPC Blueprint**
+
+1. [**VDMS VPC Infrastructure Diagram**](#11-vdms-vpc-infrastructure-diagram)
+1. [**Infrastructure deployed by VDMS VPC Blueprint**](#12-infrastructure-deployed-by-vdms-vpc-blueprint)
+1. [**Dependencies**](#13-dependencies)
+1. [**Input variables**](#14-input-variables)
+1. [**Output Variables**](#15-output-variables)
+1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
+1. [**AMI to Region Mappings**](#17-ami-to-region-mappings)
+
+VDMS provides infrastructure to setup ad and adfs. Which allows controlled access to admins to wide variety of private and public data sources that are not yet public
+domain.
+
+## 1.1. **VDMS VPC Infrastructure Diagram**
+
+![alt text](https://user-images.githubusercontent.com/23142980/27918441-fb748168-623c-11e7-89b3-b0c60a635c5e.png)
+
+In this deployment model, the VDMS is deployed by creating the seperate vpc with having one private subnet in each AZ of 
+specified region. This infrastructure is later refered by ad-setup blueprint to setup the ad servers in each AZ.
+
+## 1.2. **Infrastructure deployed by VDMS VPC Blueprint**
+
+List of resources created by the VDMS Blueprint:
+
+1. VPC
+
+    * VPC with the specified CIDR in the input variable is created.
+
+1. Subnets
+
+    * Two Private subnets are created in different AZ in the VPC created in previous setup.
+    
+1. Route Tables
+
+    * Two route tables are created for each subnet and associated with the respective subnets.
+    
+1. Virtual Private Gateway
+
+    * The VPN gateway should be attached to the VDMS VPC.
+    
+1. VPC endpoint
+
+    * VPC endpoint is created
+    
+1. Log Group
+
+    * A log group is created, in which all flow log of the VDSS VPC are stored.
+
+## 1.3. **Dependencies**
+
+The dev-app-vpc-setup Blueprint has to be deployed, in order to specify the IAM role to aws_flow_log for monitering the 
+traffic coming from app-vpc before deploying the vdms-vpc-setup blueprint. The VDMS blueprint is configured to utilize 
+one private subnet in each Availability Zones of the specified region.
+
+## 1.4. **Input variables**
+
+|    **Variables**     |         **Description**                                  |
+|----------------------|----------------------------------------------------------|
+| Owner                | reandeploy.service.user                                  |
+| Environment          | prod                                                     |
+| Product              | dot-sdc                                                  |
+| vpc_cidr_block       | CIDR block for VDMS VPC                                  |
+| flow_log_traffic_type| Traffic type(ex.ALL)                                     |
+| az_count             | No of availability Zones                                 |
+| priv_subnet_names    | vdms-vpc-private-subnet                                  |
+| az_cidr_length       | 2                                                        |
+| az_cidr_newbits      | 4                                                        |
+| subnet_cidr_length   | 1                                                        |
+| subnet_cidr_newbits  | 8                                                        |
+| sophos_vpn_pool_cidr | VPN pool address for sophos                              |
+
+## 1.5. **Output Variables**
+
+| **Variables**           | **Description**                                   |
+|-------------------------|---------------------------------------------------|
+| VPCId                   | VPC ID of VDMS VPC used by ad,adfs and VPN setup  |
+| Subnet1ID               | Subnet1ID used by ad and adfs setup               |
+| Subnet2ID               | Subnet2ID used by ad and adfs setup               |
+| Region                  | VDMS Region                                       |
+| VPC-CIDR                | CIDR block for VDMS VPC                           |
+| VPGId                   | ID of Virtual Private Gatway used in VDMS         |
+| VPNPoolSGId             | ID of Security Group which is used for VPN Setup  |
+| owner                   | reandeploy.service.user                           |
+| product                 | prod                                              |
+| environment             | dot-sdc                                           |
+## 1.6. **Configuration steps to be taken before deploying the environment**  
+
+1. Add the input variable values to all the keys.
+1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **app-vpc-setup**
+1. In the AWS Subnet resource named priv_subnet, open the count attribute and set appropriate value.
+    _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
+   az_count is specified in the input json. Then count can be set as:
+
+        "${var.az_count * length(split(",",var.priv_subnet_names))}"
+        
+1. In the Route table resource named priv_rtb, open the count attribute and set appropriate value.
+
+   _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
+   az_count is specified in the input json. Then count for route table can be set as:
+
+        "count": "${var.az_count}"
+
+1. If the
+    For AZs "a and b", use:
+
+        "${element(data.aws_availability_zones.available.names, 0)}"
+        "${element(data.aws_availability_zones.available.names, 1)}"
+
+    For AZs "c and d",use:
+
+        "${element(data.aws_availability_zones.available.names, 2)}"
+        "${element(data.aws_availability_zones.available.names, 4)}"
+
+1. If any other availability zones other than "a and b" are being used,
+   rename the subnets in the parameters and template_body attributes in the
+   Sophos_HA_ASG_CF resource accordingly. (For example, "pubSubnetc & pubSubnetd" for AZs "c and d".
