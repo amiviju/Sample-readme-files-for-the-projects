@@ -73,6 +73,9 @@ one private subnet in each Availability Zones of the specified region.
 
 | **Variables**           | **Description**                                   |
 |-------------------------|---------------------------------------------------|
+| owner                   | reandeploy.service.user                           |
+| product                 | dot-sdc                                           |
+| environment             | prod                                              |
 | VPCId                   | VPC ID of VDMS VPC used by ad,adfs and VPN setup  |
 | Subnet1ID               | Subnet1ID used by ad and adfs setup               |
 | Subnet2ID               | Subnet2ID used by ad and adfs setup               |
@@ -80,9 +83,6 @@ one private subnet in each Availability Zones of the specified region.
 | VPC-CIDR                | CIDR block for VDMS VPC                           |
 | VPGId                   | ID of Virtual Private Gatway used in VDMS         |
 | VPNPoolSGId             | ID of Security Group which is used for VPN Setup  |
-| owner                   | reandeploy.service.user                           |
-| product                 | prod                                              |
-| environment             | dot-sdc                                           |
 ## 1.6. **Configuration steps to be taken before deploying the environment**  
 
 1. Add the input variable values to all the keys.
