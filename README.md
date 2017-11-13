@@ -101,4 +101,5 @@ one private subnet in each Availability Zones of the specified region.
 
         "count": "${var.az_count}"
    here the route table associations for each route table can be specified with following count configuration:
-      "count": "${var.az_count * length(split(",",var.priv_subnet_names))}"
+   
+        "count": "${var.az_count * length(split(",",var.priv_subnet_names))}"
