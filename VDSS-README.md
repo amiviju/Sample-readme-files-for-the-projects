@@ -28,14 +28,15 @@ List of resources created by the VDSS Blueprint:
 1. Subnets
 
     * Two Private subnets are created in different AZ in the VPC created in previous setup.
+    * Two public subnets are created.
     
 1. Route Tables
 
-    * Two route tables are created for each subnet and associated with the respective subnets.
+    * Four route tables are created for each subnet and associated with the respective subnets.
     
-1. Virtual Private Gateway
+1. Internet Gateway
 
-    * The VPN gateway should be attached to the VDMS VPC.
+    * One internet gateway attached to the VPC.
     
 1. VPC endpoint
 
@@ -58,30 +59,30 @@ one private subnet in each Availability Zones of the specified region.
 | Owner                | reandeploy.service.user                                  |
 | Environment          | prod                                                     |
 | Product              | dot-sdc                                                  |
-| vpc_cidr_block       | CIDR block for VDMS VPC                                  |
+| vpc_cidr_block       | CIDR block for VDSS VPC                                  |
 | flow_log_traffic_type| Traffic type(ex.ALL)                                     |
 | az_count             | No of availability Zones                                 |
-| priv_subnet_names    | vdms-vpc-private-subnet                                  |
+| priv_subnet_names    | vdss-vpc-private-subnet                                  |
+| public_subnet_names    | vdss-vpc-public-subnet                                  |
 | az_cidr_length       | 2                                                        |
 | az_cidr_newbits      | 4                                                        |
 | subnet_cidr_length   | 1                                                        |
 | subnet_cidr_newbits  | 8                                                        |
-| sophos_vpn_pool_cidr | VPN pool address for sophos                              |
 
 ## 1.5. **Output Variables**
 
 | **Variables**           | **Description**                                   |
 |-------------------------|---------------------------------------------------|
+| owner                   | reandeploy.service.user                           |
+| environment             | prod                                              |
+| product                 | dot-sdc                                           |
 | VPCId                   | VPC ID of VDMS VPC used by ad,adfs and VPN setup  |
 | Subnet1ID               | Subnet1ID used by ad and adfs setup               |
 | Subnet2ID               | Subnet2ID used by ad and adfs setup               |
 | Region                  | VDMS Region                                       |
 | VPC-CIDR                | CIDR block for VDMS VPC                           |
-| VPGId                   | ID of Virtual Private Gatway used in VDMS         |
-| VPNPoolSGId             | ID of Security Group which is used for VPN Setup  |
-| owner                   | reandeploy.service.user                           |
-| product                 | prod                                              |
-| environment             | dot-sdc                                           |
+| PublicSubnet1ID         | ID of public subnet 2 used in VDMS                |
+| PublicSubnet2ID         | ID of public subnet 2 used in VDMS                |
 ## 1.6. **Configuration steps to be taken before deploying the environment**  
 
 1. Add the input variable values to all the keys.
