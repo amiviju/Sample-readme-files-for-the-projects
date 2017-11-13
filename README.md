@@ -100,14 +100,5 @@ one private subnet in each Availability Zones of the specified region.
    az_count is specified in the input json. Then count for route table can be set as:
 
         "count": "${var.az_count}"
-
-1. If the
-    For AZs "a and b", use:
-
-        "${cidrsubnet(cidrsubnet(var.vpc_cidr_block, var.az_cidr_newbits, var.az_cidr_length * (count.index % var.az_count)), 
-        var.subnet_cidr_newbits, var.subnet_cidr_length * (count.index / var.az_count + length(split(",",var.priv_subnet_names))
-        * signum(length(var.priv_subnet_names))))}"
-
-1. If any other availability zones other than "a and b" are being used,
-   rename the subnets in the parameters and template_body attributes in the
-   Sophos_HA_ASG_CF resource accordingly. (For example, "pubSubnetc & pubSubnetd" for AZs "c and d".
+   here the route table associations for each route table can be specified with following count configuration:
+      "count": "${var.az_count * length(split(",",var.priv_subnet_names))}"
