@@ -12,7 +12,7 @@ domain.
 
 ## 1.1. **VDSS VPC Infrastructure Diagram**
 
-![alt text](https://user-images.githubusercontent.com/23142980/27918441-fb748168-623c-11e7-89b3-b0c60a635c5e.png)
+![dot-vdms-vpc-setup - page 1](https://user-images.githubusercontent.com/9102229/32782191-a3afc544-c96d-11e7-87cb-8c32db319c83.png)
 
 In this deployment model, the VDMS is deployed by creating the seperate vpc with having one private subnet in each AZ of 
 specified region. This infrastructure is later refered by ad-setup blueprint to setup the ad servers in each AZ.
