@@ -6,17 +6,16 @@
 1. [**Input variables**](#14-input-variables)
 1. [**Output Variables**](#15-output-variables)
 1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
-1. [**AMI to Region Mappings**](#17-ami-to-region-mappings)
 
 VDMS provides infrastructure to setup ad and adfs. Which allows controlled access to admins to wide variety of private and public data sources that are not yet public
 domain.
 
 ## 1.1. **VDMS VPC Infrastructure Diagram**
 
-![alt text](https://user-images.githubusercontent.com/23142980/27918441-fb748168-623c-11e7-89b3-b0c60a635c5e.png)
+![dot-vdms-vpc-setup - page 1](https://user-images.githubusercontent.com/20499487/32822318-f0d47fe6-c9fd-11e7-9942-b318e14cab69.jpeg)
 
 In this deployment model, the VDMS is deployed by creating the seperate vpc with having one private subnet in each AZ of 
-specified region. This infrastructure is later refered by ad-setup blueprint to setup the ad servers in each AZ.
+specified region.
 
 ## 1.2. **Infrastructure deployed by VDMS VPC Blueprint**
 
@@ -48,7 +47,7 @@ List of resources created by the VDMS Blueprint:
 
 ## 1.3. **Dependencies**
 
-The dev-app-vpc-setup Blueprint has to be deployed, in order to specify the IAM role to aws_flow_log for monitering the 
+The app-vpc-setup Blueprint has to be deployed, in order to specify the IAM role to aws_flow_log for monitoring the 
 traffic coming from app-vpc before deploying the vdms-vpc-setup blueprint. The VDMS blueprint is configured to utilize 
 one private subnet in each Availability Zones of the specified region.
 
@@ -56,26 +55,26 @@ one private subnet in each Availability Zones of the specified region.
 
 |    **Variables**     |         **Description**                                  |
 |----------------------|----------------------------------------------------------|
-| Owner                | reandeploy.service.user                                  |
-| Environment          | prod                                                     |
-| Product              | dot-sdc                                                  |
+| Owner                | Owner of the Product(Ex.reandeploy.service.user)         |
+| Environment          | Deploy Environment(Ex.prod/dev)                          |
+| Product              | Product Name(Ex.dot-sdc)                                 |
 | vpc_cidr_block       | CIDR block for VDMS VPC                                  |
-| flow_log_traffic_type| Traffic type(ex.ALL)                                     |
+| flow_log_traffic_type| Traffic type(Ex.ALL)                                     |
 | az_count             | No of availability Zones                                 |
-| priv_subnet_names    | vdms-vpc-private-subnet                                  |
+| priv_subnet_names    | Name prefix for subnets(Ex.vdms-vpc-private-subnet)      |
 | az_cidr_length       | 2                                                        |
 | az_cidr_newbits      | 4                                                        |
 | subnet_cidr_length   | 1                                                        |
 | subnet_cidr_newbits  | 8                                                        |
-| sophos_vpn_pool_cidr | VPN pool address for sophos                              |
+| sophos_vpn_pool_cidr | sophos vpn pool cidr range                               |
 
 ## 1.5. **Output Variables**
 
 | **Variables**           | **Description**                                   |
 |-------------------------|---------------------------------------------------|
-| owner                   | reandeploy.service.user                           |
-| product                 | dot-sdc                                           |
-| environment             | prod                                              |
+| owner                   | Owner of the Product(Ex.reandeploy.service.user)  |
+| product                 | Product Name(Ex.dot-sdc)                          |
+| environment             | Deploy Environment(Ex.prod/dev)                   |
 | VPCId                   | VPC ID of VDMS VPC used by ad,adfs and VPN setup  |
 | Subnet1ID               | Subnet1ID used by ad and adfs setup               |
 | Subnet2ID               | Subnet2ID used by ad and adfs setup               |
