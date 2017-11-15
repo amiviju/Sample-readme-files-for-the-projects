@@ -7,8 +7,7 @@
 1. [**Output Variables**](#15-output-variables)
 1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
 
-VDMS provides infrastructure to setup ad and adfs. Which allows controlled access to admins to wide variety of private and public data sources that are not yet public
-domain.
+VDMS provides infrastructure Virtual Data Center Managed Services. Which allows controlled access to admins to wide variety of private and public data sources that are not yet public domain.
 
 ## 1.1. **VDMS VPC Infrastructure Diagram**
 
