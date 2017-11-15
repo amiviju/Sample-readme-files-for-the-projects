@@ -19,7 +19,7 @@ In this deployment model, the VDSS VPC is deployed by creating the seperate vpc 
 
 List of resources created by the VDSS Blueprint:
 
-1. VPC
+1. **VPC**
 
     * VPC with the specified CIDR in the input variable is created.
 
