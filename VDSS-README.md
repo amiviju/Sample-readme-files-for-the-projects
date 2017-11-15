@@ -85,6 +85,7 @@ one private subnet and one public subnet in each Availability Zones of the speci
 1. Add the input variable values to all the keys.
 1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **app-vpc-setup**
 1. In the AWS Subnet resource named priv_subnet, open the count attribute and set appropriate value.
+    
     _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
    az_count and priv_subnet_names is specified in the input json. Then count can be set as:
 
