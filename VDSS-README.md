@@ -7,15 +7,14 @@
 1. [**Output Variables**](#15-output-variables)
 1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
 
-VDMS provides infrastructure to setup ad and adfs. Which allows controlled access to admins to wide variety of private and public data sources that are not yet public
-domain.
+VDSS VPC provides infrastructure for Security Services. Which allows controlled access to admins to wide variety of private and public data sources that are not yet public domain.
 
 ## 1.1. **VDSS VPC Infrastructure Diagram**
 
 ![dot-vdss-vpc-setup - page 1](https://user-images.githubusercontent.com/20499487/32821072-8da252dc-c9f7-11e7-84f7-6a6991b49fcf.jpeg)
 
-In this deployment model, the VDMS is deployed by creating the seperate vpc with having one private subnet in each AZ of 
-specified region. This infrastructure is later refered by ad-setup blueprint to setup the ad servers in each AZ.
+In this deployment model, the VDSS is deployed by creating the seperate vpc with having one private subnet in each AZ of 
+specified region.
 
 ## 1.2. **Infrastructure deployed by VDSS VPC Blueprint**
 
@@ -48,9 +47,8 @@ List of resources created by the VDSS Blueprint:
 
 ## 1.3. **Dependencies**
 
-The dev-app-vpc-setup Blueprint has to be deployed, in order to specify the IAM role to aws_flow_log for monitering the 
-traffic coming from app-vpc before deploying the vdms-vpc-setup blueprint. The VDMS blueprint is configured to utilize 
-one private subnet in each Availability Zones of the specified region.
+The app-vpc-setup Blueprint has to be deployed before deploying the vdms-vpc-setup blueprint. In order to specify the IAM role to aws_flow_log for monitering the traffic coming from app-vpc. The vdss blueprint is configured to utilize 
+one private subnet and one public subnet in each Availability Zones of the specified region.
 
 ## 1.4. **Input variables**
 
@@ -89,10 +87,10 @@ one private subnet in each Availability Zones of the specified region.
 1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **app-vpc-setup**
 1. In the AWS Subnet resource named priv_subnet, open the count attribute and set appropriate value.
     _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
-   az_count is specified in the input json. Then count can be set as:
+   az_count and priv_subnet_names is specified in the input json. Then count can be set as:
 
         "${var.az_count * length(split(",",var.priv_subnet_names))}"
-   here priv_subnet_names is the variable specified in input file to name the subnets.
+   here priv_subnet_names is the variable specified in input file to name(prefix) the subnets.
         
 1. In the Route table resource named priv_rtb, open the count attribute and set appropriate value.
 
@@ -103,3 +101,6 @@ one private subnet in each Availability Zones of the specified region.
    here the route table associations for each route table can be specified with following count configuration:
    
         "count": "${var.az_count * length(split(",",var.priv_subnet_names))}"
+    here priv_subnet_names is the variable specified in input file to name the subnets.
+1. Set the inbounds and outbounds for resource aws_network_acl named guardrail.
+1. Check for the output variable values to all the keys.
