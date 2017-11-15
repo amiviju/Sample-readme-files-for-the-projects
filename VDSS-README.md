@@ -13,8 +13,7 @@ VDSS VPC provides infrastructure for Security Services. Which allows controlled 
 
 ![dot-vdss-vpc-setup - page 1](https://user-images.githubusercontent.com/20499487/32821072-8da252dc-c9f7-11e7-84f7-6a6991b49fcf.jpeg)
 
-In this deployment model, the VDSS is deployed by creating the seperate vpc with having one private subnet in each AZ of 
-specified region.
+In this deployment model, the VDSS VPC is deployed by creating the seperate vpc with having one private subnet and one public subnet in each AZ of specified region.
 
 ## 1.2. **Infrastructure deployed by VDSS VPC Blueprint**
 
@@ -47,7 +46,7 @@ List of resources created by the VDSS Blueprint:
 
 ## 1.3. **Dependencies**
 
-The app-vpc-setup Blueprint has to be deployed before deploying the vdms-vpc-setup blueprint. In order to specify the IAM role to aws_flow_log for monitering the traffic coming from app-vpc. The vdss blueprint is configured to utilize 
+The app-vpc-setup Blueprint has to be deployed before deploying the vdms-vpc-setup blueprint. In order to specify the IAM role to aws_flow_log for monitering the traffic coming from app-vpc. The VDSS VPC blueprint is configured to utilize 
 one private subnet and one public subnet in each Availability Zones of the specified region.
 
 ## 1.4. **Input variables**
