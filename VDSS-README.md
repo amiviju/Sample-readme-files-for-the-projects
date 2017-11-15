@@ -23,30 +23,30 @@ List of resources created by the VDSS Blueprint:
 
     * VPC with the specified CIDR in the input variable is created.
 
-1. Subnets
+1. **Subnets**
 
     * Two Private subnets are created in different AZ in the VPC created in previous setup.
     * Two public subnets are created.
     
-1. Route Tables
+1. **Route Tables**
 
     * Four route tables are created for each subnet and associated with the respective subnets.
     
-1. Internet Gateway
+1. **Internet Gateway**
 
     * One internet gateway attached to the VPC.
     
-1. VPC endpoint
+1. **VPC endpoint**
 
     * VPC endpoint is created
     
-1. Log Group
+1. **Log Group**
 
     * A log group is created, in which all flow log of the VDSS VPC are stored.
 
 ## 1.3. **Dependencies**
 
-The app-vpc-setup Blueprint has to be deployed before deploying the vdms-vpc-setup blueprint. In order to specify the IAM role to aws_flow_log for monitering the traffic coming from app-vpc. The VDSS VPC blueprint is configured to utilize 
+The **app-vpc-setup** Blueprint has to be deployed before deploying the **vdss-vpc-setup** blueprint. In order to specify the IAM role to aws_flow_log for monitering the traffic coming from app-vpc. The VDSS VPC blueprint is configured to utilize 
 one private subnet and one public subnet in each Availability Zones of the specified region.
 
 ## 1.4. **Input variables**
@@ -82,9 +82,9 @@ one private subnet and one public subnet in each Availability Zones of the speci
 | PublicSubnet2ID         | ID of public subnet 2 used in VDSS                |
 ## 1.6. **Configuration steps to be taken before deploying the environment**  
 
-1. Add the input variable values to all the keys.
+1. Add the **input variable** values to all the keys.
 1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **app-vpc-setup**
-1. In the AWS Subnet resource named priv_subnet, open the count attribute and set appropriate value.
+1. In the AWS **Subnet** resource named **priv_subnet**, open the count attribute and set appropriate value.
     
     _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
    az_count and priv_subnet_names is specified in the input json. Then count can be set as:
@@ -92,7 +92,7 @@ one private subnet and one public subnet in each Availability Zones of the speci
         "${var.az_count * length(split(",",var.priv_subnet_names))}"
    here priv_subnet_names is the variable specified in input file to name(prefix) the subnets.
         
-1. In the Route table resource named priv_rtb, open the count attribute and set appropriate value.
+1. In the **Route table** resource named **priv_rtb**, open the count attribute and set appropriate value.
 
    _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
    az_count is specified in the input json. Then count for route table can be set as:
@@ -102,5 +102,5 @@ one private subnet and one public subnet in each Availability Zones of the speci
    
         "count": "${var.az_count * length(split(",",var.priv_subnet_names))}"
     here priv_subnet_names is the variable specified in input file to name the subnets.
-1. Set the inbounds and outbounds for resource aws_network_acl named guardrail.
-1. Check for the output variable values to all the keys.
+1. Set the **inbounds** and **outbounds** for resource aws_network_acl named guardrail.
+1. Check for the ***output variable** values to all the keys.
