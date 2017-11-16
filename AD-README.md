@@ -7,7 +7,7 @@
 1. [**Output Variables**](#15-output-variables)
 1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
 
-AD-SETUP blueprint provides infrastructure to setup AD servers in VDMS private subnet's. It provides authentication and authorization mechanisms as well as a framework within which other related services can be deployed like AD Federated Services.
+AD-Setup blueprint provides infrastructure to setup AD servers in VDMS private subnet's. It provides authentication and authorization mechanisms as well as a framework within which other related services can be deployed like AD Federated Services.
 ## 1.1. **AD-Setup Architecture Diagram**
 
 ![image](https://user-images.githubusercontent.com/20499487/32878497-38411820-cacc-11e7-9695-098765f317f1.png)
