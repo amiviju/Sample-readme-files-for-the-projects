@@ -70,5 +70,12 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-se
 ## 1.6. **Configuration steps to be taken before deploying the environment**  
 
 1. Add the **input** variable values to all the keys.
+
+         Four SSM Password Parameters in Parameter Store :
+                 a. Domain Controller 1 Password
+                 b. Domain Controller 2 Password
+                 c. Restore Password for DC 1
+                 d. Restore Password for DC2
+
 1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **vdms-vpc-setup**
 1. AWS security froup resource named **AD-SG*** should be configured with VDMS VPC such that all-traffic Inbound rule for itself (Self-point SG rule).        
