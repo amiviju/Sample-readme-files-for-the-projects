@@ -7,13 +7,12 @@
 1. [**Output Variables**](#15-output-variables)
 1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
 
-AD-SETUP blueprint provides infrastructure to setup active directories in VDMS. Which allows controlled access to admins for wide variety of private and public data sources that are not yet public domain.
-
+AD-SETUP blueprint provides infrastructure to setup AD servers in VDMS private subnet's. It provides authentication and authorization mechanisms as well as a framework within which other related services can be deployed like AD Federated Services.
 ## 1.1. **AD SETUP Architecture Diagram**
 
 ![image](https://user-images.githubusercontent.com/20499487/32878497-38411820-cacc-11e7-9695-098765f317f1.png)
 
-In this deployment model, the AD is deployed within the VDMS VPC. 
+In this deployment model, the AD is deployed within the private subnets of VDMS VPC. 
 
 ## 1.2. **Infrastructure deployed by VDMS VPC Blueprint**
 
@@ -37,7 +36,7 @@ List of resources created by the Active Directory Blueprint:
     
 ## 1.3. **Dependencies**
 
-The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-setup blueprint**. In order to deploy the AD server in each subnet created by the **vdms-vpc-setup blueprint.**
+The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-setup blueprint**. In order to deploy the AD server in private subnet created by the **vdms-vpc-setup blueprint.**
 
 ## 1.4. **Input variables**
 
@@ -47,31 +46,31 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-se
 | Environment                    | Deploy Environment(Ex.prod/dev)                          |
 | Product                        | Product Name(Ex.dot-sdc)                                 |
 | region                         | CIDR block for VDMS VPC                                  |
-| ami                            | Traffic type(Ex.ALL)                                     |
-| instance_type                  | No of availability Zones                                 |
-| subnet-id-1                    | Name prefix for subnets(Ex.vdms-vpc-private-subnet)      |
-| subnet-id-2                    | 2                                                        |
-| key-name                       | 4                                                        |
-| host-name-1                    | 1                                                        |
-| host-name-2                    | 8                                                        |
-| dc1-ssm-password-parameter     | sophos vpn pool cidr range                               |
-| dc2-ssm-password-parameter     | sophos vpn pool cidr range                               |
-| dc1-restore-password-parameter | sophos vpn pool cidr range                               |
-| dc2-restore-password-parameter | sophos vpn pool cidr range                               |
-| domain-name                    | sophos vpn pool cidr range                               |
-| net-bios-name                  | sophos vpn pool cidr range                               |
-| site-name-1                    | sophos vpn pool cidr range                               |
-| site-name-2                    | sophos vpn pool cidr range                               |
-| replication-frequency          |        |
+| ami                            | AMI-ID to be setup on instance                           |
+| instance_type                  | Instance type for the AD server                          |
+| subnet-id-1                    | Subnet ID of VDMS private subnet-1                       |
+| subnet-id-2                    | Subnet ID of VDMS private subnet-2                       |
+| key-name                       | Keypair for AD                                           |
+| host-name-1                    | Host Name of the instance 1                              |
+| host-name-2                    | Host Name of the instance 2                              |
+| dc1-ssm-password-parameter     | Domain Controller 1 Password                             |
+| dc2-ssm-password-parameter     | Domain Controller 2 Password                             |
+| dc1-restore-password-parameter | Restore Password for DC 1                                |
+| dc2-restore-password-parameter | Restore Password for DC 2                                |
+| domain-name                    | Domain name for AD(Ex.sdc.usdot)                         |
+| net-bios-name                  | net bios name(Ex.SDC)                                    |
+| site-name-1                    | (Ex.AZ1)                               |
+| site-name-2                    | (Ex.AZ2)                               |
+| replication-frequency          | Replication frequency(EX.15)       |
 
 ## 1.5. **Output Variables**
- The **ad-setup** is at leaf node in the hierarchy of dependency. So there is no output from this blueprint to other 
+ The **ad-setup** is at leaf node in the hierarchy of environment dependency. So there is no output from this blueprint to other 
  environment.
 
 ## 1.6. **Configuration steps to be taken before deploying the environment**  
 
 1. Add the **input** variable values to all the keys.
-1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **app-vpc-setup**
+1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **vdms-vpc-setup**
 1. In the **AWS Subnet** resource named **priv_subnet**, open the count attribute and set appropriate value.
     _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
    az_count is specified in the input json. Then count can be set as:
