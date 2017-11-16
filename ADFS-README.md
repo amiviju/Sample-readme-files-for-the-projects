@@ -16,56 +16,65 @@ In this deployment model, the AD is deployed within the private subnets of VDMS 
 
 ## 1.2. **Infrastructure deployed by ADFS-Setup Blueprint**
 
-List of resources created by the Active Directory Blueprint:
+List of resources created by the ADFS Blueprint:
 
 1. **EC2 instances**
 
-    * Two Domain Controllers (sdc.usdot1/sdc.usdot2) are created in different AZ in the VPC.
+    * ADFS server is created in private subnet of  VDMS VPC.
 
 1. **IAM Role**
 
-    * Two IAM roles for DCs for providing necessary permission.
+    *  Two IAM roles for ADFS for providing necessary permission.
     
 1. **IAM Policy**
 
-    * Two IAM Policy for DCs.
+    *  Two IAM Policy for ADFS.
     
 1. **Instance Profile**
 
-    *  Two instance profiles for attaching role to DCs.
+    *  Two instance profiles for attaching role to ADFS.
     
 ## 1.3. **Dependencies**
 
-The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-setup blueprint**. In order to deploy the AD server in private subnet created by the **vdms-vpc-setup blueprint.**
+The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **adfs-setup blueprint**. In order to deploy the AD server in private subnet created by the **vdms-vpc-setup blueprint.**
 
 ## 1.4. **Input variables**
 
 |    **Variables**               |         **Description**                                  |
-|--------------------------------|--------------------------------------------------|
+|--------------------------------|----------------------------------------------------------|
 | Owner                          | Owner of the Product(Ex.reandeploy.service.user)         |
 | Environment                    | Deploy Environment(Ex.prod/dev)                          |
 | Product                        | Product Name(Ex.dot-sdc)                                 |
 | region                         | CIDR block for VDMS VPC                                  |
 | ami                            | AMI-ID to be setup on instance                           |
 | instance_type                  | Instance type for the AD server                          |
-| subnet-id-1                    | Subnet ID of VDMS private subnet-1                       |
-| subnet-id-2                    | Subnet ID of VDMS private subnet-2                       |
+| subnet-id                      | Subnet ID of VDMS private subnet-1                       |
+| sg-id                          | Subnet ID of VDMS private subnet-2                       |
 | key-name                       | Keypair for AD                                           |
-| host-name-1                    | Host Name of the instance 1                              |
-| host-name-2                    | Host Name of the instance 2                              |
-| dc1-ssm-password-parameter     | Domain Controller 1 Password                             |
-| dc2-ssm-password-parameter     | Domain Controller 2 Password                             |
-| dc1-restore-password-parameter | Restore Password for DC 1                                |
-| dc2-restore-password-parameter | Restore Password for DC 2                                |
-| domain-name                    | Domain name for AD(Ex.sdc.usdot)                         |
-| net-bios-name                  | net bios name(Ex.SDC)                                    |
-| site-name-1                    | (Ex.AZ1)                               |
-| site-name-2                    | (Ex.AZ2)                               |
-| replication-frequency          | Replication frequency(EX.15)       |
+| host-name                      | Host Name of the instance 1                              |
+| domain-name                    | Host Name of the instance 2                              |
+| net-bios-name                  | Domain Controller 1 Password                             |
+| adfs-service-account           | Domain name for AD(Ex.sdc.usdot)                         |
+| dc1-private-ip                 | net bios name(Ex.SDC)                                    |
+| dc2-private-ip                 | (Ex.AZ1)                               |
+| ssl-bucket                     | (Ex.AZ2)                               |
+| rules-bucket                   | Replication frequency(EX.15)       |
+| ssl-prefix                     |                 |
+| ssl-key                        |     |
+| issuance-auth-prefix           |     |
+| issuance-auth-key              |     |
+| claim-rules-prefix             |          |
+| claim-rules-key                |       |
+| self-cert-flag                 |     |
+| saml-provider-name             |     |
+| federation-service-display     |     |
+| federation-service-name        |     |
+| dc1-ssm-password-parameter     |     |
+| adfs-ssm-password-parameter    |     |
+| ssl-cert-password-parameter    |     |  
 
 ## 1.5. **Output Variables**
- The **ad-setup** is at leaf node in the hierarchy of environment dependency. So there is no output from this blueprint to other 
- environment.
+ The **adfs-setup** is at leaf node in the hierarchy of environment dependency. So there is no output from this to other environment.
 
 ## 1.6. **Configuration steps to be taken before deploying the environment**  
 
