@@ -45,33 +45,33 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **adfs-
 | Owner                          | Owner of the Product(Ex.reandeploy.service.user)         |
 | Environment                    | Deploy Environment(Ex.prod/dev)                          |
 | Product                        | Product Name(Ex.dot-sdc)                                 |
-| region                         | CIDR block for VDMS VPC                                  |
+| region                         | region of VDMS VPC                                       |
 | ami                            | AMI-ID to be setup on instance                           |
 | instance_type                  | Instance type for the AD server                          |
-| subnet-id                      | Subnet ID of VDMS private subnet-1                       |
-| sg-id                          | Subnet ID of VDMS private subnet-2                       |
+| subnet-id                      | Subnet ID of VDMS private subnet                         |
+| sg-id                          | Security group ID which is created by AD blueprint       |
 | key-name                       | Keypair for AD                                           |
-| host-name                      | Host Name of the instance 1                              |
-| domain-name                    | Host Name of the instance 2                              |
-| net-bios-name                  | Domain Controller 1 Password                             |
-| adfs-service-account           | Domain name for AD(Ex.sdc.usdot)                         |
-| dc1-private-ip                 | net bios name(Ex.SDC)                                    |
-| dc2-private-ip                 | (Ex.AZ1)                               |
-| ssl-bucket                     | (Ex.AZ2)                               |
-| rules-bucket                   | Replication frequency(EX.15)       |
-| ssl-prefix                     |                 |
-| ssl-key                        |     |
-| issuance-auth-prefix           |     |
-| issuance-auth-key              |     |
-| claim-rules-prefix             |          |
-| claim-rules-key                |       |
-| self-cert-flag                 |     |
-| saml-provider-name             |     |
-| federation-service-display     |     |
-| federation-service-name        |     |
-| dc1-ssm-password-parameter     |     |
-| adfs-ssm-password-parameter    |     |
-| ssl-cert-password-parameter    |     |  
+| host-name                      | Host Name of the instance                                |
+| domain-name                    | Domain name for AD(Ex.sdc.usdot)                         |
+| net-bios-name                  | net bios name(Ex.SDC)                                    |
+| adfs-service-account           | adfs service account name                                |
+| dc1-private-ip                 |                                                          |
+| dc2-private-ip                 |                                                          |
+| ssl-bucket                     | SSl Bucket                                               |
+| rules-bucket                   | Rules Bucket                                             |
+| ssl-prefix                     |                                                          |
+| ssl-key                        |                                                           |
+| issuance-auth-prefix           |                                                           |
+| issuance-auth-key              |                                                           |
+| claim-rules-prefix             |                                                           |
+| claim-rules-key                |                                                           |
+| self-cert-flag                 | Self Cert flag(True/False)                                |
+| saml-provider-name             | Saml provider name(Ex.USDOT-ADFS in this case)            |
+| federation-service-display     |                                                        |
+| federation-service-name        |                                                        |
+| dc1-ssm-password-parameter     |                                                        |
+| adfs-ssm-password-parameter    |                                                        |
+| ssl-cert-password-parameter    |                                                        | 
 
 ## 1.5. **Output Variables**
  The **adfs-setup** is at leaf node in the hierarchy of environment dependency. So there is no output from this to other environment.
@@ -86,5 +86,4 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **adfs-
                  c. Restore Password for DC 1
                  d. Restore Password for DC2
 
-1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **vdms-vpc-setup**
-1. AWS security froup resource named **AD-SG*** should be configured with VDMS VPC such that all-traffic Inbound rule for itself (Self-point SG rule).        
+1. Add the parent environment name to the depends on resource named **vdms-vpc-setup**
