@@ -71,21 +71,4 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-se
 
 1. Add the **input** variable values to all the keys.
 1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **vdms-vpc-setup**
-1. In the **AWS Subnet** resource named **priv_subnet**, open the count attribute and set appropriate value.
-    _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
-   az_count is specified in the input json. Then count can be set as:
-
-        "${var.az_count * length(split(",",var.priv_subnet_names))}"
-   here priv_subnet_names is the variable specified in input file to name the subnets.
-        
-1. In the **Route table** resource named **priv_rtb**, open the count attribute and set appropriate value.
-
-   _Example:_ Assume the no of subnet to be created is the no of availability zones and the variable 
-   az_count is specified in the input json. Then count for route table can be set as:
-
-        "count": "${var.az_count}"
-   here the route table associations for each route table can be specified with following count configuration:
-   
-        "count": "${var.az_count * length(split(",",var.priv_subnet_names))}"
-        
-1. Check for the **output** variable values to all the keys.
+1. AWS security froup resource named **AD-SG*** should be configured with VDMS VPC such that all-traffic Inbound rule for itself (Self-point SG rule).        
