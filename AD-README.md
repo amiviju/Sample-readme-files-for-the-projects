@@ -45,7 +45,7 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-se
 | Owner                          | Owner of the Product(Ex.reandeploy.service.user)         |
 | Environment                    | Deploy Environment(Ex.prod/dev)                          |
 | Product                        | Product Name(Ex.dot-sdc)                                 |
-| region                         | CIDR block for VDMS VPC                                  |
+| region                         | region of  for VDMS VPC                                  |
 | ami                            | AMI-ID to be setup on instance                           |
 | instance_type                  | Instance type for the AD server                          |
 | subnet-id-1                    | Subnet ID of VDMS private subnet-1                       |
