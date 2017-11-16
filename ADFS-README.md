@@ -1,20 +1,20 @@
-# 1. **AD-Setup Blueprint**
+# 1. **ADFS-Setup Blueprint**
 
-1. [**AD-Setup Architecture Diagram**](#11-ad-setup-architecture-diagram)
-1. [**Infrastructure deployed by AD-Setup Blueprint**](#12-infrastructure-deployed-by-ad-setup-blueprint)
+1. [**ADFS-Setup Architecture Diagram**](#11-adfs-setup-architecture-diagram)
+1. [**Infrastructure deployed by ADFS-Setup Blueprint**](#12-infrastructure-deployed-by-adfs-setup-blueprint)
 1. [**Dependencies**](#13-dependencies)
 1. [**Input variables**](#14-input-variables)
 1. [**Output Variables**](#15-output-variables)
 1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
 
 AD-SETUP blueprint provides infrastructure to setup AD servers in VDMS private subnet's. It provides authentication and authorization mechanisms as well as a framework within which other related services can be deployed like AD Federated Services.
-## 1.1. **AD-Setup Architecture Diagram**
+## 1.1. **ADFS-Setup Architecture Diagram**
 
-![image](https://user-images.githubusercontent.com/20499487/32878497-38411820-cacc-11e7-9695-098765f317f1.png)
+![image](https://user-images.githubusercontent.com/20499487/32883733-2ad223de-cade-11e7-81e3-af67dac7ba78.png)
 
 In this deployment model, the AD is deployed within the private subnets of VDMS VPC. 
 
-## 1.2. **Infrastructure deployed by AD-Setup Blueprint**
+## 1.2. **Infrastructure deployed by ADFS-Setup Blueprint**
 
 List of resources created by the Active Directory Blueprint:
 
