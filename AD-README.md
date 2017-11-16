@@ -1,53 +1,43 @@
 # 1. **AD Blueprint**
 
-1. [**AD Infrastructure Diagram**](#11-AD-infrastructure-diagram)
+1. [**AD SETUP Architecture Diagram**](#11-ad-setup-architecture-diagram)
 1. [**Infrastructure deployed by AD Blueprint**](#12-infrastructure-deployed-by-vdms-vpc-blueprint)
 1. [**Dependencies**](#13-dependencies)
 1. [**Input variables**](#14-input-variables)
 1. [**Output Variables**](#15-output-variables)
 1. [**Configuration steps to be taken before deploying the environment**](#16-configuration-steps-to-be-taken-before-deploying-the-environment)
 
-VDMS provides infrastructure for Virtual Data Center Managed Services. Which allows controlled access to admins for wide variety of private and public data sources that are not yet public domain.
+AD-SETUP blueprint provides infrastructure to setup active directories in VDMS. Which allows controlled access to admins for wide variety of private and public data sources that are not yet public domain.
 
-## 1.1. **VDMS VPC Infrastructure Diagram**
+## 1.1. **AD SETUP Architecture Diagram**
 
-![dot-vdms-vpc-setup - page 1](https://user-images.githubusercontent.com/20499487/32822318-f0d47fe6-c9fd-11e7-9942-b318e14cab69.jpeg)
+![image](https://user-images.githubusercontent.com/20499487/32878497-38411820-cacc-11e7-9695-098765f317f1.png)
 
-In this deployment model, the VDMS is deployed by creating the seperate vpc with having one private subnet in each AZ of 
-specified region.
+In this deployment model, the AD is deployed within the VDMS VPC. 
 
 ## 1.2. **Infrastructure deployed by VDMS VPC Blueprint**
 
-List of resources created by the VDMS Blueprint:
+List of resources created by the Active Directory Blueprint:
 
-1. **VPC**
+1. **EC2 instances**
 
-    * VPC with the specified CIDR in the input variable is created.
+    * Two Domain Controllers (sdc.usdot1/sdc.usdot2) are created in different AZ in the VPC.
 
-1. **Subnets**
+1. **IAM Role**
 
-    * Two Private subnets are created in different AZ in the VPC created in previous setup.
+    * Two IAM roles for DCs for providing necessary permission.
     
-1. **Route Tables**
+1. **IAM Policy**
 
-    * Two route tables are created for each subnet and associated with the respective subnets.
+    * Two IAM Policy for DCs.
     
-1. **Virtual Private Gateway**
+1. **Instance Profile**
 
-    * The VPN gateway should be attached to the VDMS VPC.
+    *  Two instance profiles for attaching role to DCs.
     
-1. **VPC endpoint**
-
-    * VPC endpoint is created
-    
-1. **Log Group**
-
-    * A log group is created, in which all flow log of the VDSS VPC are stored.
-
 ## 1.3. **Dependencies**
 
-The **app-vpc-setup** Blueprint has to be deployed before deploying the **vdms-vpc-setup blueprint**. In order to specify the IAM role to aws_flow_log for monitoring the traffic coming from **app-vpc**. The VDMS VPC blueprint is configured to utilize 
-one private subnet in each Availability Zones of the specified region.
+The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-setup blueprint**. In order to deploy the AD server in each subnet created by the **vdms-vpc-setup blueprint.**
 
 ## 1.4. **Input variables**
 
