@@ -78,4 +78,4 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **ad-se
                  d. Restore Password for DC2
 
 1. Add the parent environment name (used for vpc id to create flow log) to the depends on resource named **vdms-vpc-setup**
-1. AWS security froup resource named **AD-SG*** should be configured with VDMS VPC such that all-traffic Inbound rule for itself (Self-point SG rule).        
+1. AWS security group resource named **AD-SG*** should be configured with VDMS VPC such that all-traffic Inbound rule for itself (Self-point SG rule).        
