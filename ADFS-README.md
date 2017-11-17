@@ -43,10 +43,10 @@ The **vdms-vpc-setup** Blueprint has to be deployed before deploying the **adfs-
 
 |    **Variables**               |         **Description**                                  |
 |--------------------------------|----------------------------------------------------------|
-| Owner                          | Owner of the Product(Ex.reandeploy.service.user)         |
-| Environment                    | Deploy Environment(Ex.prod/dev)                          |
-| Product                        | Product Name(Ex.dot-sdc)                                 |
-| region                         | region of VDMS VPC                                       |
+| Owner                          | Owner tag value to be associated with the created aws resources         |
+| Environment                    | Environment tag value to be associated with the created aws resources   |
+| Product                        | Product tag value to be associated with the created aws resources       |
+| region                         | VDMS VPC region                                          |
 | ami                            | AMI-ID to be setup on instance                           |
 | instance_type                  | Instance type for the AD server                          |
 | subnet-id                      | Subnet ID of VDMS private subnet                         |
